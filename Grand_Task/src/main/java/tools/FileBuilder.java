@@ -28,7 +28,7 @@ public class FileBuilder {
         return this;
     }
 
-    public void getResult() {
+    public void build() {
         Path from = Paths.get(tmpDir.toString() + "//" + fileName);
         Path to = Paths.get(fileName);
         try {
