@@ -2,13 +2,15 @@ package tools;
 
 import enums.FileTypes;
 import org.w3c.dom.*;
+import org.xml.sax.SAXException;
+
 import javax.xml.parsers.*;
 import javax.xml.transform.*;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.dom.*;
+import javax.xml.transform.stream.*;
 import java.io.*;
 import java.nio.file.Path;
+import java.util.ArrayList;
 
 public class xmlLib {
     public static String xmlForm(String fileName, Path tmpDir) throws IOException {
@@ -51,6 +53,29 @@ public class xmlLib {
             throw new RuntimeException(e);
         }
         return fileName;
+    }
+    public static ArrayList<String> xmlParse(String fileName) {
+        ArrayList<String> res = new ArrayList<>();
+        DocumentBuilder builder;
+        try {
+            builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+        Document document;
+        try {
+                document = builder.parse(fileName);
+        } catch (SAXException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        NodeList expressions = document.getElementsByTagName("exp");
+        for (int i = 0; i < expressions.getLength(); i++) {
+        Node exp = expressions.item(i);
+        res.add(exp.getTextContent());
+        }
+        return res;
     }
 
 }
