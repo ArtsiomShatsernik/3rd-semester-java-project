@@ -8,3 +8,4 @@
 16
 -9
 993
+Error! Division by zero.
