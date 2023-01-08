@@ -1,11 +1,12 @@
 package tools;
 
-import com.github.cliftonlabs.json_simple.JsonArray;
-import com.github.cliftonlabs.json_simple.JsonObject;
 import enums.FileTypes;
+import org.json.simple.*;
+import org.json.simple.parser.*;
 
 import java.io.*;
 import java.nio.file.*;
+import java.util.ArrayList;
 
 public class JsonLib {
         public static String jsonForm(String fileName, Path tmpDir) throws IOException {
@@ -22,15 +23,29 @@ public class JsonLib {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            JsonArray expressions = new JsonArray();
+            JSONArray expressions = new JSONArray();
             String nextLine;
             while ((nextLine = reader.readLine()) != null) {
-                JsonObject nextExp = new JsonObject();
+                JSONObject nextExp = new JSONObject();
                 nextExp.put("exp", nextLine);
                 expressions.add(nextExp);
             }
-            writer.write(expressions.toJson());
+            writer.write(expressions.toJSONString());
             writer.flush();
             return fileName;
+        }
+        public static ArrayList<String> jsonParse(String fileName) {
+            ArrayList<String> res = new ArrayList<>();
+            JSONParser parser = new JSONParser();
+            try {
+                JSONArray expressions = (JSONArray) parser.parse(new FileReader(fileName));
+                for (Object expression : expressions) {
+                    JSONObject exp = (JSONObject) expression;
+                    res.add((String) exp.get("exp"));
+                }
+            } catch (IOException | ParseException e) {
+                throw new RuntimeException(e);
+            }
+            return res;
         }
 }
