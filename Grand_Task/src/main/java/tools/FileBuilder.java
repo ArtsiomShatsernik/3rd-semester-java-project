@@ -1,5 +1,7 @@
 package tools;
 
+import enums.FileTypes;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,7 +10,7 @@ import java.nio.file.StandardCopyOption;
 
 public class FileBuilder {
     private String fileName;
-    private Path tmpDir;
+    private final Path tmpDir;
 
     public FileBuilder(String fileName) {
         this.fileName = fileName;
@@ -19,11 +21,22 @@ public class FileBuilder {
         }
     }
 
-    public FileBuilder toXml() {
-        try {
-            fileName = xmlLib.xmlForm(fileName, tmpDir);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public FileBuilder setFileType(FileTypes type) {
+        switch (type) {
+            case xml -> {
+                try {
+                    fileName = XmlLib.xmlForm(fileName, tmpDir);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            case json -> {
+                try {
+                    fileName = JsonLib.jsonForm(fileName, tmpDir);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
         return this;
     }

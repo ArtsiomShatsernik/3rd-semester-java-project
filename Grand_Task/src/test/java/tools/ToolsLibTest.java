@@ -2,11 +2,11 @@ package tools;
 
 import org.junit.*;
 
-public class toolsLibTest {
+public class ToolsLibTest {
 
     @Test
     public void getFileName() {
         String testName = "test.txt";
-        Assert.assertEquals("test", toolsLib.getFileName(testName));
+        Assert.assertEquals("test", ToolsLib.getFileName(testName));
     }
 }

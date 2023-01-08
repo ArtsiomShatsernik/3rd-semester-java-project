@@ -2,6 +2,6 @@ package org.main;
 
 import java.util.ArrayList;
 
-public class mathExpressions {
+public class MathExpressions {
     public static ArrayList <String> exp;
 }
