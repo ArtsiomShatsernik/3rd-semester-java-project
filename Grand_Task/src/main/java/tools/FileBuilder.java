@@ -24,9 +24,9 @@ public class FileBuilder {
     }
 
     public FileBuilder setFileType(FileTypes type) {
-        if (isArchived == true) {
+        if (isArchived) {
             System.out.println("File already archived. Incorrect sequencing.");
-        } else if (isEncrypted == true) {
+        } else if (isEncrypted) {
             System.out.println("File already encrypted. Incorrect sequencing.");
         } else {
             switch (type) {
@@ -61,7 +61,12 @@ public class FileBuilder {
                 }
             }
             case zip -> {
-
+                try {
+                    fileName += ArchivingLib.packZip(fileInTmpDir, tmpDir);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                fileInTmpDir = ToolsLib.formPathToTmpDir(tmpDir, fileName);
             }
         }
         isArchived = true;
