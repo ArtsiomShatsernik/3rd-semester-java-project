@@ -17,6 +17,11 @@ public class ToolsLibTest {
         Assert.assertEquals("test", ToolsLib.getFileName(testName));
     }
     @Test
+    public void deletePathToTmpDir() {
+        String testName = "C:\\Users\\User\\AppData\\Local\\Temp\\tmp11562600244765466445\\test.txt";
+        Assert.assertEquals("test.txt", ToolsLib.deletePathToTmpDir(testName));
+    }
+    @Test
     public void formPathToTmpDirWithContainedPath() {
         String tmpDir = "C:\\Users\\User\\AppData\\Local\\Temp\\tmp11562600244765466445";
         String fileName = "C:\\Users\\User\\AppData\\Local\\Temp\\tmp11562600244765466445\\input.xml";

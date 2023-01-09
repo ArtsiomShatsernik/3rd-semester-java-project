@@ -1,6 +1,5 @@
 package tools;
 
-import javax.xml.transform.stream.StreamResult;
 import java.nio.file.*;
 
 public class ToolsLib {
@@ -11,7 +10,7 @@ public class ToolsLib {
             return  fileName.substring(0, fileName.indexOf("."));
         }
     }
-    public static String deletePath(String fileName) {
+    public static String deletePathToTmpDir(String fileName) {
         if (fileName.contains("\\")) {
             return fileName.substring(fileName.lastIndexOf("\\") + 1);
         } else {
@@ -22,7 +21,7 @@ public class ToolsLib {
         if (fileName.contains(tmpDir.toString())) {
             return fileName;
         } else {
-            return tmpDir.toString() + "\\" + fileName;
+            return tmpDir + "\\" + fileName;
         }
     }
 }

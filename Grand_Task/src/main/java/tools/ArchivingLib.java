@@ -9,9 +9,11 @@ import java.util.zip.*;
 
 public class ArchivingLib {
     public static String packJar(String fileName, Path tmpDir) throws IOException {
-        JarOutputStream jarOut = new JarOutputStream(new FileOutputStream(ToolsLib.formPathToTmpDir(tmpDir, fileName).replace("\\", "/") + "." + ArchivingTypes.jar));
+        JarOutputStream jarOut = new JarOutputStream(
+                new FileOutputStream(ToolsLib.formPathToTmpDir(tmpDir, fileName)
+                        .replace("\\", "/") + "." + ArchivingTypes.jar));
         jarOut.setLevel(Deflater.DEFAULT_COMPRESSION);
-        JarEntry entry = new JarEntry(ToolsLib.deletePath(fileName));
+        JarEntry entry = new JarEntry(ToolsLib.deletePathToTmpDir(fileName));
         jarOut.putNextEntry(entry);
         FileInputStream inputStream = new FileInputStream(fileName);
         byte[] buffer = new byte[inputStream.available()];
@@ -22,7 +24,7 @@ public class ArchivingLib {
         jarOut.closeEntry();
         inputStream.close();
         jarOut.close();
-        return ".jar";
+        return "." + ArchivingTypes.jar;
     }
 
     public static  void unpackJar(String jarName) {
@@ -52,9 +54,11 @@ public class ArchivingLib {
         }
     }
     public static String packZip(String fileName, Path tmpDir) throws IOException {
-        ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(ToolsLib.formPathToTmpDir(tmpDir, fileName).replace("\\", "/") + "." + ArchivingTypes.zip));
+        ZipOutputStream zipOut = new ZipOutputStream(
+                new FileOutputStream(ToolsLib.formPathToTmpDir(tmpDir, fileName)
+                        .replace("\\", "/") + "." + ArchivingTypes.zip));
         zipOut.setLevel(Deflater.DEFAULT_COMPRESSION);
-        ZipEntry entry = new ZipEntry(ToolsLib.deletePath(fileName));
+        ZipEntry entry = new ZipEntry(ToolsLib.deletePathToTmpDir(fileName));
         zipOut.putNextEntry(entry);
         FileInputStream inputStream = new FileInputStream(fileName);
         byte[] buffer = new byte[inputStream.available()];
@@ -65,7 +69,7 @@ public class ArchivingLib {
         zipOut.closeEntry();
         inputStream.close();
         zipOut.close();
-        return ".zip";
+        return "." + ArchivingTypes.zip;
     }
     public static  void unpackZip(String zipName) {
         byte[] buffer = new byte[1024];
@@ -93,7 +97,6 @@ public class ArchivingLib {
             throw new RuntimeException(e);
         }
     }
-
 
 }
 

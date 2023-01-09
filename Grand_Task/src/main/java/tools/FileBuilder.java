@@ -1,6 +1,7 @@
 package tools;
 
 import enums.ArchivingTypes;
+import enums.EncryptionTypes;
 import enums.FileTypes;
 
 import java.io.*;
@@ -10,17 +11,26 @@ public class FileBuilder {
     private String fileName;
     private final Path tmpDir;
     private String fileInTmpDir;
+    private final String defaultKey = "QfTjWnZq";
+    private String currentKey = defaultKey;
     boolean isArchived = false;
     boolean isEncrypted = false;
 
     public FileBuilder(String fileName) {
         this.fileName = fileName;
-        fileInTmpDir = fileName;
+        this.fileInTmpDir = fileName;
         try {
             tmpDir = Files.createTempDirectory("tmp");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    public FileBuilder(String fileName, String currentKey) {
+        this(fileName);
+        if (currentKey.length() < 8) {
+            throw new RuntimeException("Incorrect key. Key must be 8 characters or more.");
+        }
+            this.currentKey = currentKey;
     }
 
     public FileBuilder setFileType(FileTypes type) {
@@ -46,6 +56,9 @@ public class FileBuilder {
                         throw new RuntimeException("JSONForm error!");
                     }
                 }
+                case txt -> {
+
+                }
             }
         }
         return this;
@@ -63,13 +76,23 @@ public class FileBuilder {
             case zip -> {
                 try {
                     fileName += ArchivingLib.packZip(fileInTmpDir, tmpDir);
+                    fileInTmpDir = ToolsLib.formPathToTmpDir(tmpDir, fileName);
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    throw new RuntimeException("Archiving error!");
                 }
-                fileInTmpDir = ToolsLib.formPathToTmpDir(tmpDir, fileName);
             }
         }
         isArchived = true;
+        return this;
+    }
+    public FileBuilder setEncryptionType(EncryptionTypes type) {
+        switch (type) {
+            case axx -> {
+                fileName += CryptoLib.encrypt(fileInTmpDir, tmpDir, currentKey);
+                fileInTmpDir = ToolsLib.formPathToTmpDir(tmpDir, fileName);
+            }
+        }
+
         return this;
     }
 
