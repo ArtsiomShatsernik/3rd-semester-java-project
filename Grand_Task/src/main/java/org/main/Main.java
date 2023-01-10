@@ -10,6 +10,5 @@ public class Main {
     public static void main(String[] args) {
     FileBuilder builder = new FileBuilder("input.txt");
     builder.fileType(FileTypes.json).encryptionType(EncryptionTypes.axx).archivingType(ArchivingTypes.zip).make();
-    System.out.println();
     }
 }
