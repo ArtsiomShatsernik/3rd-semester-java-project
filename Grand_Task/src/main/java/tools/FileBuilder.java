@@ -3,11 +3,12 @@ package tools;
 import enums.ArchivingTypes;
 import enums.EncryptionTypes;
 import enums.FileTypes;
+import interfaces.IFileActions;
 
 import java.io.*;
 import java.nio.file.*;
 
-public class FileBuilder {
+public class FileBuilder implements IFileActions {
     private String fileName;
     private final Path tmpDir;
     private String fileInTmpDir;
@@ -33,7 +34,7 @@ public class FileBuilder {
             this.currentKey = currentKey;
     }
 
-    public FileBuilder setFileType(FileTypes type) {
+    public IFileActions fileType(FileTypes type) {
         if (isArchived) {
             System.out.println("File already archived. Incorrect sequencing.");
         } else if (isEncrypted) {
@@ -63,7 +64,7 @@ public class FileBuilder {
         }
         return this;
     }
-    public FileBuilder setArchivingType(ArchivingTypes type) {
+    public IFileActions archivingType(ArchivingTypes type) {
         switch (type) {
             case jar -> {
                 try {
@@ -85,7 +86,7 @@ public class FileBuilder {
         isArchived = true;
         return this;
     }
-    public FileBuilder setEncryptionType(EncryptionTypes type) {
+    public IFileActions encryptionType(EncryptionTypes type) {
         switch (type) {
             case axx -> {
                 fileName += CryptoLib.encrypt(fileInTmpDir, tmpDir, currentKey);
@@ -96,7 +97,7 @@ public class FileBuilder {
         return this;
     }
 
-    public void build() {
+    public void make() {
         Path from = Paths.get(ToolsLib.formPathToTmpDir(tmpDir, fileName));
         Path to = Paths.get(fileName);
         try {

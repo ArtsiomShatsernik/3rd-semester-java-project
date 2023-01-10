@@ -9,8 +9,7 @@ import tools.*;
 public class Main {
     public static void main(String[] args) {
     FileBuilder builder = new FileBuilder("input.txt");
-    builder.setFileType(FileTypes.json).setEncryptionType(EncryptionTypes.axx).setArchivingType(ArchivingTypes.zip).build();
-    ArchivingLib.unpackZip("check.zip");
+    builder.fileType(FileTypes.json).encryptionType(EncryptionTypes.axx).archivingType(ArchivingTypes.zip).make();
     System.out.println();
     }
 }

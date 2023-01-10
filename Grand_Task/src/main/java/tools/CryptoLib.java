@@ -4,10 +4,10 @@ import enums.EncryptionTypes;
 
 import javax.crypto.*;
 import javax.crypto.spec.DESKeySpec;
+import java.security.spec.InvalidKeySpecException;
 import java.io.*;
 import java.nio.file.Path;
 import java.security.*;
-import java.security.spec.InvalidKeySpecException;
 
 public class CryptoLib {
     final private static String encryptAlgo = "DES/ECB/PKCS5Padding";
