@@ -1,14 +1,15 @@
-package tools;
+package builders;
 
 import enums.ArchivingTypes;
 import enums.EncryptionTypes;
 import enums.FileTypes;
 import interfaces.IFileActions;
+import tools.*;
 
 import java.io.*;
 import java.nio.file.*;
 
-public class FileBuilder implements IFileActions {
+public class FileFormBuilder implements IFileActions {
     private String fileName;
     private final Path tmpDir;
     private String fileInTmpDir;
@@ -17,7 +18,7 @@ public class FileBuilder implements IFileActions {
     boolean isArchived = false;
     boolean isEncrypted = false;
 
-    public FileBuilder(String fileName) {
+    public FileFormBuilder(String fileName) {
         this.fileName = fileName;
         this.fileInTmpDir = fileName;
         try {
@@ -26,15 +27,17 @@ public class FileBuilder implements IFileActions {
             throw new RuntimeException(e);
         }
     }
-    public FileBuilder(String fileName, String currentKey) {
+
+    public FileFormBuilder(String fileName, String currentKey) {
         this(fileName);
         if (currentKey.length() < 8) {
             throw new RuntimeException("Incorrect key. Key must be 8 characters or more.");
         }
-            this.currentKey = currentKey;
+        this.currentKey = currentKey;
     }
 
-    public IFileActions fileType(FileTypes type) {
+    @Override
+    public IFileActions setFileType(FileTypes type) {
         if (isArchived) {
             System.out.println("File already archived. Incorrect sequencing.");
         } else if (isEncrypted) {
@@ -64,7 +67,9 @@ public class FileBuilder implements IFileActions {
         }
         return this;
     }
-    public IFileActions archivingType(ArchivingTypes type) {
+
+    @Override
+    public IFileActions setArchivingType(ArchivingTypes type) {
         switch (type) {
             case jar -> {
                 try {
@@ -86,7 +91,9 @@ public class FileBuilder implements IFileActions {
         isArchived = true;
         return this;
     }
-    public IFileActions encryptionType(EncryptionTypes type) {
+
+    @Override
+    public IFileActions setEncryptionType(EncryptionTypes type) {
         switch (type) {
             case axx -> {
                 fileName += CryptoLib.encrypt(fileInTmpDir, tmpDir, currentKey);
@@ -97,7 +104,8 @@ public class FileBuilder implements IFileActions {
         return this;
     }
 
-    public void make() {
+    @Override
+    public void build() {
         Path from = Paths.get(ToolsLib.formPathToTmpDir(tmpDir, fileName));
         Path to = Paths.get(fileName);
         try {

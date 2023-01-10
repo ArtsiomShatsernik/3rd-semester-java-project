@@ -5,8 +5,8 @@ import enums.EncryptionTypes;
 import enums.FileTypes;
 
 public interface IFileActions {
-    IFileActions fileType(FileTypes type);
-    IFileActions archivingType(ArchivingTypes type);
-    IFileActions encryptionType(EncryptionTypes type);
-    void make();
+    IFileActions setFileType(FileTypes type);
+    IFileActions setArchivingType(ArchivingTypes type);
+    IFileActions setEncryptionType(EncryptionTypes type);
+    void build();
 }

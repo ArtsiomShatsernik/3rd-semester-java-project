@@ -71,7 +71,7 @@ public class ArchivingLib {
         zipOut.close();
         return "." + ArchivingTypes.zip;
     }
-    public static  void unpackZip(String zipName) {
+    public static void unpackZip(String zipName) {
         byte[] buffer = new byte[1024];
         try {
             ZipInputStream zipIn = new ZipInputStream(new FileInputStream(zipName));

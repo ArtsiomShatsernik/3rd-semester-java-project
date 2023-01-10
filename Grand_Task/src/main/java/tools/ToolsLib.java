@@ -10,6 +10,9 @@ public class ToolsLib {
             return  fileName.substring(0, fileName.indexOf("."));
         }
     }
+    public static  String deleteLastExtension(String fileName) {
+        return fileName.substring(0, fileName.lastIndexOf(".") - 1);
+    }
     public static String deletePathToTmpDir(String fileName) {
         if (fileName.contains("\\")) {
             return fileName.substring(fileName.lastIndexOf("\\") + 1);
