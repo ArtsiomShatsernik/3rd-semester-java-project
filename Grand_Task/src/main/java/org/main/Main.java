@@ -1,25 +1,21 @@
 package org.main;
 
-import builders.FileFormBuilder;
+import FileActions.FileFormer;
+import FileActions.FileParser;
 import enums.ArchivingTypes;
 import enums.EncryptionTypes;
 import enums.FileTypes;
-import tools.TxtLib;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 
 public class Main {
     public static void main(String[] args) {
-    FileFormBuilder builder = new FileFormBuilder("input.txt");
-    builder.setFileType(FileTypes.json).setEncryptionType(EncryptionTypes.axx).setArchivingType(ArchivingTypes.zip).build();
+        FileFormer builder = new FileFormer("input.txt");
+        builder.setFileType(FileTypes.json).setArchivingType(ArchivingTypes.zip).setEncryptionType(EncryptionTypes.axx).form();
+        FileParser parser = new FileParser("input.json.zip.axx");
         ArrayList<String> aa = new ArrayList<>();
-        try {
-            aa = TxtLib.txtParse("input.txt");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        aa = parser.parse();
         System.out.println();
     }
 }

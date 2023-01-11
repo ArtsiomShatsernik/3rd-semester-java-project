@@ -1,4 +1,4 @@
-package builders;
+package FileActions;
 
 import enums.ArchivingTypes;
 import enums.EncryptionTypes;
@@ -9,7 +9,7 @@ import tools.*;
 import java.io.*;
 import java.nio.file.*;
 
-public class FileFormBuilder implements IFileActions {
+public class FileFormer implements IFileActions {
     private String fileName;
     private final Path tmpDir;
     private String fileInTmpDir;
@@ -18,7 +18,7 @@ public class FileFormBuilder implements IFileActions {
     boolean isArchived = false;
     boolean isEncrypted = false;
 
-    public FileFormBuilder(String fileName) {
+    public FileFormer(String fileName) {
         this.fileName = fileName;
         this.fileInTmpDir = fileName;
         try {
@@ -28,7 +28,7 @@ public class FileFormBuilder implements IFileActions {
         }
     }
 
-    public FileFormBuilder(String fileName, String currentKey) {
+    public FileFormer(String fileName, String currentKey) {
         this(fileName);
         if (currentKey.length() < 8) {
             throw new RuntimeException("Incorrect key. Key must be 8 characters or more.");
@@ -100,12 +100,10 @@ public class FileFormBuilder implements IFileActions {
                 fileInTmpDir = ToolsLib.formPathToTmpDir(tmpDir, fileName);
             }
         }
-
         return this;
     }
-
     @Override
-    public void build() {
+    public void form() {
         Path from = Paths.get(ToolsLib.formPathToTmpDir(tmpDir, fileName));
         Path to = Paths.get(fileName);
         try {

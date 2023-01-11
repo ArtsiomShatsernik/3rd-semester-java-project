@@ -27,7 +27,7 @@ public class ArchivingLib {
         return "." + ArchivingTypes.jar;
     }
 
-    public static  void unpackJar(String jarName) {
+    public static  void unpackJar(String jarName, Path tmpDir) {
         byte[] buffer = new byte[1024];
         try {
             JarInputStream jarIn = new JarInputStream(new FileInputStream(jarName));
@@ -39,7 +39,7 @@ public class ArchivingLib {
                 if (entry.isDirectory()) {
                     nextFile.mkdir();
                 } else {
-                    FileOutputStream fileOut = new FileOutputStream(nextFile);
+                    FileOutputStream fileOut = new FileOutputStream(ToolsLib.formPathToTmpDir(tmpDir, nextFile.getName()));
                     int length;
                     while ((length = jarIn.read(buffer)) > 0) {
                         fileOut.write(buffer, 0, length);
@@ -71,7 +71,7 @@ public class ArchivingLib {
         zipOut.close();
         return "." + ArchivingTypes.zip;
     }
-    public static void unpackZip(String zipName) {
+    public static void unpackZip(String zipName, Path tmpDir) {
         byte[] buffer = new byte[1024];
         try {
             ZipInputStream zipIn = new ZipInputStream(new FileInputStream(zipName));
@@ -83,7 +83,7 @@ public class ArchivingLib {
                 if (entry.isDirectory()) {
                     nextFile.mkdir();
                 } else {
-                    FileOutputStream fileOut = new FileOutputStream(nextFile);
+                    FileOutputStream fileOut = new FileOutputStream(ToolsLib.formPathToTmpDir(tmpDir, String.valueOf(nextFile)));
                     int length;
                     while ((length = zipIn.read(buffer)) > 0) {
                         fileOut.write(buffer, 0, length);

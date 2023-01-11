@@ -11,7 +11,14 @@ public class ToolsLib {
         }
     }
     public static  String deleteLastExtension(String fileName) {
-        return fileName.substring(0, fileName.lastIndexOf(".") - 1);
+        return fileName.substring(0, fileName.lastIndexOf("."));
+    }
+    public static String getLastExtension(String fileName) {
+        if (fileName.contains(".")) {
+            return fileName.substring((fileName.lastIndexOf(".") + 1));
+        } else {
+            return "No extension";
+        }
     }
     public static String deletePathToTmpDir(String fileName) {
         if (fileName.contains("\\")) {
