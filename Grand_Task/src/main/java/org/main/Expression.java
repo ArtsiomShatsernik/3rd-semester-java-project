@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Expression {
-    private String exp;
+    private final String exp;
 
     public Expression(String exp) {
         this.exp = exp;
@@ -15,7 +15,7 @@ public class Expression {
 
         return res;
     }
-    public void simplify() {
+    public String simplify() {
         Pattern negativeNumber = Pattern.compile("\\(\\-\\d+\\)");
         Pattern numberInParentheses  = Pattern.compile("\\(\\d+\\)");
         StringBuilder curString = new StringBuilder(this.exp);
@@ -32,15 +32,35 @@ public class Expression {
                 break;
             }
         }
-        this.exp = curString.toString();
+        return curString.toString();
     }
     public boolean isCorrect() {
-
-        return true;
+        String curString = simplify();
+        StringBuilder curStringBuilder = new StringBuilder(curString);
+        return checkParentheses(curStringBuilder);
     }
-    private boolean checkParentheses() {
-
-        return true;
+    private boolean checkParentheses(StringBuilder curString) {
+        try {
+            while(curString.toString().contains("(")) {
+                int firstID = getFirstBracketID(curString);
+                int secondID = getSecondBracketID(curString) + firstID;
+                curString.replace(firstID, secondID , "a");
+            }
+        } catch (RuntimeException e) {
+            return false;
+        }
+        return !curString.toString().contains(")");
+    }
+    private int getFirstBracketID(StringBuilder string) throws RuntimeException {
+        return string.lastIndexOf("(");
+    }
+    private int getSecondBracketID(StringBuilder string) throws RuntimeException {
+        string = new StringBuilder(string.substring(getFirstBracketID(string)));
+        if (string.toString().contains(")")) {
+            return string.indexOf(")") + 1;
+        } else {
+            throw new RuntimeException("No \")\" in expression");
+        }
     }
 
     public String getExp() {
