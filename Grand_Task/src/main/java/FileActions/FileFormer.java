@@ -61,7 +61,13 @@ public class FileFormer implements IFileActions {
                     }
                 }
                 case txt -> {
-
+                    Path from = Paths.get(fileName);
+                    Path to = Paths.get(ToolsLib.formPathToTmpDir(tmpDir, fileName));
+                    try {
+                        Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         }
