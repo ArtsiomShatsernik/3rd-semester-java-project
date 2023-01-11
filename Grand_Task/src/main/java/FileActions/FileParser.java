@@ -9,11 +9,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.security.cert.Extension;
 import java.util.ArrayList;
 
 public class FileParser implements IFileActions {
-    ArrayList<String> data;
+    private ArrayList<String> data;
     private String fileName;
     private final Path tmpDir;
     private String fileInTmpDir;
@@ -46,41 +45,51 @@ public class FileParser implements IFileActions {
 
     @Override
     public IFileActions setFileType(FileTypes type) {
-        data = new ArrayList<>();
-        switch (type) {
-            case xml -> data = XmlLib.xmlParse(fileInTmpDir);
-            case json -> data = JsonLib.jsonParse(fileInTmpDir);
-            case txt -> {
-                try {
-                    data = TxtLib.txtParse(fileInTmpDir);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+        try {
+            data = new ArrayList<>();
+            switch (type) {
+                case xml -> data = XmlLib.xmlParse(fileInTmpDir);
+                case json -> data = JsonLib.jsonParse(fileInTmpDir);
+                case txt -> {
+                    try {
+                        data = TxtLib.txtParse(fileInTmpDir);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Error! Check the correctness of file type.");
         }
-        fileName = ToolsLib.deleteLastExtension(fileName);
-        fileInTmpDir = ToolsLib.deleteLastExtension(fileInTmpDir);
         return this;
     }
 
     @Override
     public IFileActions setArchivingType(ArchivingTypes type) {
-        switch (type) {
-            case jar -> ArchivingLib.unpackJar(fileInTmpDir, tmpDir);
-            case zip -> ArchivingLib.unpackZip(fileInTmpDir, tmpDir);
+        try {
+            switch (type) {
+                case jar -> ArchivingLib.unpackJar(fileInTmpDir, tmpDir);
+                case zip -> ArchivingLib.unpackZip(fileInTmpDir, tmpDir);
+            }
+            fileName = ToolsLib.deleteLastExtension(fileName);
+            fileInTmpDir = ToolsLib.deleteLastExtension(fileInTmpDir);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Error! Check the correctness of archiving type.");
         }
-        fileName = ToolsLib.deleteLastExtension(fileName);
-        fileInTmpDir = ToolsLib.deleteLastExtension(fileInTmpDir);
         return this;
     }
 
     @Override
     public IFileActions setEncryptionType(EncryptionTypes type) {
-        switch (type) {
-            case axx -> CryptoLib.decrypt(fileInTmpDir, currentKey);
+        try {
+            switch (type) {
+                case axx -> CryptoLib.decrypt(fileInTmpDir, currentKey);
+            }
+            fileName = ToolsLib.deleteLastExtension(fileName);
+            fileInTmpDir = ToolsLib.deleteLastExtension(fileInTmpDir);
+        }  catch (RuntimeException e) {
+            throw new RuntimeException("Error! Check the correctness of encryption type.");
         }
-        fileName = ToolsLib.deleteLastExtension(fileName);
-        fileInTmpDir = ToolsLib.deleteLastExtension(fileInTmpDir);
         return this;
     }
     @Override
@@ -95,24 +104,26 @@ public class FileParser implements IFileActions {
     }
 
     public ArrayList<String> parse() {
-        String lastExtension;
-        while ((lastExtension = ToolsLib.getLastExtension(fileName)) != "No extension") {
-            for (enums.FileTypes type: enums.FileTypes.values()) {
-                if (lastExtension.equals(type.name())) {
-                    this.setFileType(FileTypes.valueOf(lastExtension));
-                    return data;
+        if (data == null) {
+            String lastExtension;
+            while (!(lastExtension = ToolsLib.getLastExtension(fileName)).equals("No extension")) {
+                for (enums.FileTypes type : enums.FileTypes.values()) {
+                    if (lastExtension.equals(type.name())) {
+                        this.setFileType(FileTypes.valueOf(lastExtension));
+                        return data;
+                    }
                 }
-            }
-            for (enums.ArchivingTypes type: enums.ArchivingTypes.values()) {
-                if (lastExtension.equals(type.name())) {
-                    this.setArchivingType(ArchivingTypes.valueOf(lastExtension));
-                    break;
+                for (enums.ArchivingTypes type : enums.ArchivingTypes.values()) {
+                    if (lastExtension.equals(type.name())) {
+                        this.setArchivingType(ArchivingTypes.valueOf(lastExtension));
+                        break;
+                    }
                 }
-            }
-            for (enums.EncryptionTypes type: enums.EncryptionTypes.values()) {
-                if (lastExtension.equals(type.name())) {
-                    this.setEncryptionType(EncryptionTypes.valueOf(lastExtension));
-                    break;
+                for (enums.EncryptionTypes type : enums.EncryptionTypes.values()) {
+                    if (lastExtension.equals(type.name())) {
+                        this.setEncryptionType(EncryptionTypes.valueOf(lastExtension));
+                        break;
+                    }
                 }
             }
         }
