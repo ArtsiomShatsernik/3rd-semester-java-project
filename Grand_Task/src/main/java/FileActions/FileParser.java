@@ -100,7 +100,7 @@ public class FileParser implements IFileActions {
             for (enums.FileTypes type: enums.FileTypes.values()) {
                 if (lastExtension.equals(type.name())) {
                     this.setFileType(FileTypes.valueOf(lastExtension));
-                    break;
+                    return data;
                 }
             }
             for (enums.ArchivingTypes type: enums.ArchivingTypes.values()) {
