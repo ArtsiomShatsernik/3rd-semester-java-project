@@ -7,43 +7,42 @@ import org.junit.Test;
 public class ExpressionTest {
 
     @Test
-    public void compute() {
+    public void compute1() {
+        Expression test = new Expression("(1 + 2) * (3 + 4)");
+        String actual = test.compute();
+        Assert.assertEquals("21.0", actual);
+    }
+    @Test
+    public void compute2() {
+        Expression test = new Expression("(1 + (2 * (56 / 7)) - 1)");
+        String actual = test.compute();
+        Assert.assertEquals("16.0", actual);
+    }
+    @Test(expected = RuntimeException.class)
+    public void compute3() {
+        Expression test = new Expression("2 / 0");
+        test.compute();
     }
 
     @Test
     public void simplify() {
         Expression test = new Expression("1 + (-1) + (25) + (36)");
-        String actual = test.simplify();
-        Assert.assertEquals("1 + [-1] + 25 + 36", actual);
+        String actual = test.simplify(test.getExp());
+        Assert.assertEquals("1 + -1 + 25 + 36", actual);
     }
+
     @Test
-    public void isCorrect1() {
-        Expression test = new Expression("(1 + 1) * (2 + 2)");
-        Boolean actual = test.isCorrect();
-        Assert.assertEquals(true, actual);
+    public void toRPN() {
+        Expression test = new Expression("1 + 1");
+        StringBuilder builder = new StringBuilder("3 + 4 * 10 / 2");
+        StringBuilder res = test.toRPN(builder);
+        Assert.assertEquals("3 4 10 * 2 / + ", res.toString());
     }
+
     @Test
-    public void isCorrect2() {
-        Expression test = new Expression("(1 + 1 * (2 + 2)");
-        Boolean actual = test.isCorrect();
-        Assert.assertEquals(false, actual);
-    }
-    @Test
-    public void isCorrect3() {
-        Expression test = new Expression("(((((1 + 1)))))");
-        Boolean actual = test.isCorrect();
-        Assert.assertEquals(true, actual);
-    }
-    @Test
-    public void isCorrect4() {
-        Expression test = new Expression("((1 + 1) * 2 ) + (1 + 1)");
-        Boolean actual = test.isCorrect();
-        Assert.assertEquals(true, actual);
-    }
-    @Test
-    public void isCorrect5() {
-        Expression test = new Expression("2 + 2");
-        Boolean actual = test.isCorrect();
-        Assert.assertEquals(true, actual);
+    public void computeRPN() {
+        Expression test = new Expression("1 + 1");
+        String res = test.computeRPN("1 * 4 + 2 * 4 + 3");
+        Assert.assertEquals("15.0", res);
     }
 }
