@@ -37,7 +37,7 @@ public class MathExpressions {
             try {
                 results.add(next.compute());
             } catch (RuntimeException e) {
-                results.add(e.toString());
+                results.add(e.getMessage());
             }
         }
         try {

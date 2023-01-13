@@ -14,11 +14,11 @@ public class Expression {
     public Expression(String exp) {
         this.exp = exp;
         this.simplifiedExp = simplify(this.exp);
+    }
+    public String compute() {
         if (!isCorrect()) {
             throw new RuntimeException("Incorrect expression. Check parentheses");
         }
-    }
-    public String compute() {
         StringBuilder curString = new StringBuilder(simplifiedExp);
         while(curString.toString().contains("(")) {
             int firstID = getFirstBracketID(curString);

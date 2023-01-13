@@ -1,12 +1,10 @@
 package org.main;
 
 import FileActions.FileFormer;
-import FileActions.FileParser;
 import enums.ArchivingTypes;
 import enums.EncryptionTypes;
 import enums.FileTypes;
 
-import java.util.ArrayList;
 
 
 public class Main {
