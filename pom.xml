@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.main</groupId>
-    <artifactId>Grand_Task</artifactId>
+    <artifactId>3rd-semester-java-project</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>Grand_Task</name>
+    <name>3rd-semester-java-project</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
