@@ -1,4 +1,4 @@
-package main;
+package org.main;
 
 import FileActions.FileParser;
 

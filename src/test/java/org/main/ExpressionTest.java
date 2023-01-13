@@ -1,6 +1,5 @@
 package org.main;
 
-import main.Expression;
 import org.junit.Assert;
 import org.junit.Test;
 

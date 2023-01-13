@@ -1,4 +1,4 @@
-package com.main.grand_task;
+package UI;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

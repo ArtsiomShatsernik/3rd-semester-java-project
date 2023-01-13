@@ -6,6 +6,6 @@ module com.main.grand_task {
     requires java.xml;
 
 
-    opens com.main.grand_task to javafx.fxml;
-    exports com.main.grand_task;
+    opens UI to javafx.fxml;
+    exports UI;
 }
