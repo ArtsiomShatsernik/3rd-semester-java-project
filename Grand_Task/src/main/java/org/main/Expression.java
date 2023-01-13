@@ -1,5 +1,7 @@
 package org.main;
 
+import net.objecthunter.exp4j.ExpressionBuilder;
+
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,6 +27,10 @@ public class Expression {
         }
         this.result = computeRPN(String.valueOf(curString));
         return this.result;
+    }
+    public String computeWithExtension() {
+        net.objecthunter.exp4j.Expression exp = new ExpressionBuilder(this.exp).build();
+        return String.valueOf(exp.evaluate());
     }
     public String simplify(String exp) {
         Pattern negativeNumber = Pattern.compile("\\(-\\d+\\)");
@@ -137,6 +143,7 @@ public class Expression {
         }
         return String.valueOf(calculation.peek());
     }
+
     private Double computeSimpleExpression(Double a, Double b, String op) throws RuntimeException {
         switch (op) {
             case "+" -> {
@@ -144,9 +151,11 @@ public class Expression {
             }
             case "-" -> {
                 return a - b;
-            } case "*" -> {
+            }
+            case "*" -> {
                 return a * b;
-            } case "/" -> {
+            }
+            case "/" -> {
                 if (b.equals(0.0)) {
                     throw new RuntimeException("Division by zero");
                 }

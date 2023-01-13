@@ -5,7 +5,6 @@ import org.junit.Test;
 
 
 public class ExpressionTest {
-
     @Test
     public void compute1() {
         Expression test = new Expression("(1 + 2) * (3 + 4)");
@@ -22,6 +21,23 @@ public class ExpressionTest {
     public void compute3() {
         Expression test = new Expression("2 / 0");
         test.compute();
+    }
+    @Test(expected = RuntimeException.class)
+    public void computeWithExtension3() {
+        Expression test = new Expression("2 / 0");
+        test.computeWithExtension();
+    }
+    @Test
+    public void compute4() {
+        Expression test = new Expression("1 + (-2) * (-1)");
+        String actual = test.compute();
+        Assert.assertEquals("3.0", actual);
+    }
+    @Test
+    public void computeWithExtension4() {
+        Expression test = new Expression("1 + (-2) * (-1)");
+        String actual = test.computeWithExtension();
+        Assert.assertEquals("3.0", actual);
     }
 
     @Test
