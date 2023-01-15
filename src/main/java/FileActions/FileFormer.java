@@ -1,6 +1,5 @@
 package FileActions;
 
-import interfaces.IFileActions;
 import enums.*;
 import tools.*;
 
@@ -10,16 +9,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-public class FileFormer implements IFileActions {
-    public FileTypes fileType;
-    public ArchivingTypes archivingType = null;
-    public EncryptionTypes encryptionType = null;
-    public FileOperations firstOperation;
-    public FileOperations secondOperation;
-    private String fileName;
+public class FileFormer extends FileAction {
     private final Path tmpDir;
-    private String fileInTmpDir;
-    private String currentKey = defaultKey;
     private boolean isArchived = false;
     private boolean isEncrypted = false;
 
@@ -50,9 +41,7 @@ public class FileFormer implements IFileActions {
         }
         this.currentKey = currentKey;
     }
-
-    @Override
-    public IFileActions fileType() {
+    public FileFormer fileType() {
         if (isArchived) {
             System.out.println("File already archived. Incorrect sequencing.");
         } else if (isEncrypted) {
@@ -89,8 +78,7 @@ public class FileFormer implements IFileActions {
         return this;
     }
 
-    @Override
-    public IFileActions archiving() {
+    public FileAction archiving() {
         switch (archivingType) {
             case jar -> {
                 try {
@@ -113,8 +101,7 @@ public class FileFormer implements IFileActions {
         return this;
     }
 
-    @Override
-    public IFileActions encryption() {
+    public FileAction encryption() {
         switch (encryptionType) {
             case axx -> {
                 fileName += CryptoLib.encrypt(fileInTmpDir, tmpDir, currentKey);
@@ -144,17 +131,6 @@ public class FileFormer implements IFileActions {
             } else {
                 throw new RuntimeException("Error! Incorrect operation.");
             }
-        }
-    }
-    private void identifyByOperation(FileOperations operation) {
-        if (operation.toString().equals(ArchivingTypes.jar.toString())) {
-            this.archivingType = ArchivingTypes.jar;
-        } else if (operation.toString().equals(ArchivingTypes.zip.toString())) {
-            this.archivingType = ArchivingTypes.zip;
-        } else if (operation.toString().equals(EncryptionTypes.axx.toString())) {
-            this.encryptionType = EncryptionTypes.axx;
-        } else {
-            throw new RuntimeException("Error! Incorrect operation.");
         }
     }
 }

@@ -11,6 +11,9 @@ public class ToolsLib {
         }
     }
     public static  String deleteLastExtension(String fileName) {
+        if(!fileName.contains(".")) {
+            return "No extension";
+        }
         return fileName.substring(0, fileName.lastIndexOf("."));
     }
     public static String getLastExtension(String fileName) {

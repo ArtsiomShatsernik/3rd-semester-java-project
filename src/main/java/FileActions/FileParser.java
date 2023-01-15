@@ -1,10 +1,6 @@
 package FileActions;
 
-import enums.ArchivingTypes;
-import enums.EncryptionTypes;
-import enums.FileOperations;
-import enums.FileTypes;
-import interfaces.IFileActions;
+import enums.*;
 import tools.*;
 
 import java.io.IOException;
@@ -14,17 +10,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
-public class FileParser implements IFileActions {
-    public FileTypes fileType = null;
-    public ArchivingTypes archivingType = null;
-    public EncryptionTypes encryptionType = null;
-    public FileOperations firstOperation;
-    public FileOperations secondOperation;
+public class FileParser extends FileAction {
     private ArrayList<String> data;
-    private String fileName;
     private final Path tmpDir;
-    private String fileInTmpDir;
-    private String currentKey = defaultKey;
 
     public FileParser(String fileName) {
         this.fileName = fileName;
@@ -43,6 +31,7 @@ public class FileParser implements IFileActions {
         }
         autoSet();
     }
+
     public FileParser(String fileName, FileTypes fileType) {
         this.fileName = fileName;
         this.fileType = fileType;
@@ -60,16 +49,19 @@ public class FileParser implements IFileActions {
             throw new RuntimeException(e);
         }
     }
+
     public FileParser(String fileName, FileTypes fileType, FileOperations firstOperation) {
         this(fileName, fileType);
         this.firstOperation = firstOperation;
         identifyByOperation(firstOperation);
     }
+
     public FileParser(String fileName, FileTypes fileType, FileOperations firstOperation, FileOperations secondOperation) {
         this(fileName, fileType, firstOperation);
         this.secondOperation = secondOperation;
         identifyByOperation(secondOperation);
     }
+
     public void changeEncryptionKey(String currentKey) {
         if (currentKey.length() < 8) {
             throw new RuntimeException("Incorrect key. Key must be 8 characters or more.");
@@ -77,8 +69,7 @@ public class FileParser implements IFileActions {
         this.currentKey = currentKey;
     }
 
-    @Override
-    public IFileActions fileType() {
+    public FileParser fileType() {
         try {
             data = new ArrayList<>();
             switch (fileType) {
@@ -97,8 +88,8 @@ public class FileParser implements IFileActions {
         }
         return this;
     }
-    @Override
-    public IFileActions archiving() {
+
+    public FileParser archiving() {
         try {
             switch (archivingType) {
                 case jar -> ArchivingLib.unpackJar(fileInTmpDir, tmpDir);
@@ -112,19 +103,20 @@ public class FileParser implements IFileActions {
         return this;
     }
 
-    @Override
-    public IFileActions encryption() {
+
+    public FileParser encryption() {
         try {
             switch (encryptionType) {
                 case axx -> CryptoLib.decrypt(fileInTmpDir, currentKey);
             }
             fileName = ToolsLib.deleteLastExtension(fileName);
             fileInTmpDir = ToolsLib.deleteLastExtension(fileInTmpDir);
-        }  catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             throw new RuntimeException("Error! Check the correctness of encryption type.");
         }
         return this;
     }
+
     public ArrayList<String> parse() {
         if (data == null) {
             doOperation(firstOperation);
@@ -145,7 +137,7 @@ public class FileParser implements IFileActions {
         if (data == null) {
             String lastExtension;
             String tempName = fileName;
-            Boolean end = false;
+            boolean end = false;
             while (!(lastExtension = ToolsLib.getLastExtension(tempName)).equals("No extension")) {
                 for (FileTypes type : FileTypes.values()) {
                     if (lastExtension.equals(type.name())) {
@@ -154,9 +146,9 @@ public class FileParser implements IFileActions {
                         end = true;
                         break;
                     }
-                   if(end) {
-                       break;
-                   }
+                    if (end) {
+                        break;
+                    }
                 }
                 for (ArchivingTypes type : ArchivingTypes.values()) {
                     if (lastExtension.equals(type.name())) {
@@ -177,6 +169,7 @@ public class FileParser implements IFileActions {
             }
         }
     }
+
     private void setOperations(String operation) {
         if (firstOperation == null) {
             firstOperation = FileOperations.valueOf(operation);
@@ -184,26 +177,16 @@ public class FileParser implements IFileActions {
             secondOperation = FileOperations.valueOf(operation);
         }
     }
+
     private void doOperation(FileOperations operation) {
         if (operation != null) {
             if (operation.toString().equals(archivingType.toString())) {
                 archiving();
-            } else if(operation.toString().equals(encryptionType.toString())) {
+            } else if (operation.toString().equals(encryptionType.toString())) {
                 encryption();
             } else {
                 throw new RuntimeException("Error! Incorrect operation.");
             }
-        }
-    }
-    private void identifyByOperation(FileOperations operation) {
-        if (operation.toString().equals(ArchivingTypes.jar.toString())) {
-            this.archivingType = ArchivingTypes.jar;
-        } else if (operation.toString().equals(ArchivingTypes.zip.toString())) {
-            this.archivingType = ArchivingTypes.zip;
-        } else if (operation.toString().equals(EncryptionTypes.axx.toString())) {
-            this.encryptionType = EncryptionTypes.axx;
-        } else {
-            throw new RuntimeException("Error! Incorrect operation.");
         }
     }
 }
