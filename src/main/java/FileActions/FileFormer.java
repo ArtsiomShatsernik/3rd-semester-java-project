@@ -28,12 +28,10 @@ public class FileFormer extends FileAction {
     public FileFormer(String fileName, FileTypes fileType, FileOperations firstOperation) {
         this(fileName, fileType);
         this.firstOperation = firstOperation;
-        identifyByOperation(firstOperation);
     }
     public FileFormer(String fileName, FileTypes fileType, FileOperations firstOperation, FileOperations secondOperation) {
         this(fileName, fileType, firstOperation);
         this.secondOperation = secondOperation;
-        identifyByOperation(secondOperation);
     }
     public void changeEncryptionKey(String currentKey) {
         if (currentKey.length() < 8) {
@@ -114,6 +112,7 @@ public class FileFormer extends FileAction {
         fileType();
         doOperation(firstOperation);
         doOperation(secondOperation);
+        fileName = ToolsLib.deletePathToTmpDir(fileName);
         Path from = Paths.get(ToolsLib.formPathToTmpDir(tmpDir, fileName));
         Path to = Paths.get(fileName);
         try {
@@ -123,10 +122,11 @@ public class FileFormer extends FileAction {
         }
     }
     private void doOperation(FileOperations operation) {
+        identifyByOperation(operation);
         if (operation != null) {
-            if (operation.toString().equals(archivingType.toString())) {
+            if (!(archivingType == null) && operation.toString().equals(archivingType.toString())) {
                 archiving();
-            } else if(operation.toString().equals(encryptionType.toString())) {
+            } else if (!(encryptionType == null) && operation.toString().equals(encryptionType.toString())) {
                 encryption();
             } else {
                 throw new RuntimeException("Error! Incorrect operation.");

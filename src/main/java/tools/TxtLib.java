@@ -1,12 +1,24 @@
 package tools;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class TxtLib {
+    public static String txtForm(ArrayList<String> data) {
+        BufferedWriter writer;
+        String path = "data.txt";
+        try {
+            writer = new BufferedWriter(new FileWriter(path));
+            for (String t: data) {
+                writer.write(t + "\n");
+            }
+            writer.flush();
+            writer.close();
+            return path;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
    public static ArrayList<String> txtParse(String fileName) throws IOException {
         ArrayList<String> res = new ArrayList<>();

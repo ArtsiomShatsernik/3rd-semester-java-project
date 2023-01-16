@@ -2,10 +2,12 @@ package UI;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 
 public class MenuController extends MyJavaFXApp {
+    public VBox mainMenu;
+    @FXML
+    public Button ComputeButton;
     @FXML
     protected Button BuildFileButton;
 

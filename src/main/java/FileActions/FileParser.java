@@ -53,13 +53,11 @@ public class FileParser extends FileAction {
     public FileParser(String fileName, FileTypes fileType, FileOperations firstOperation) {
         this(fileName, fileType);
         this.firstOperation = firstOperation;
-        identifyByOperation(firstOperation);
     }
 
     public FileParser(String fileName, FileTypes fileType, FileOperations firstOperation, FileOperations secondOperation) {
         this(fileName, fileType, firstOperation);
         this.secondOperation = secondOperation;
-        identifyByOperation(secondOperation);
     }
 
     public void changeEncryptionKey(String currentKey) {
@@ -179,10 +177,11 @@ public class FileParser extends FileAction {
     }
 
     private void doOperation(FileOperations operation) {
+        identifyByOperation(operation);
         if (operation != null) {
-            if (operation.toString().equals(archivingType.toString())) {
+            if (!(archivingType == null) && operation.toString().equals(archivingType.toString())) {
                 archiving();
-            } else if (operation.toString().equals(encryptionType.toString())) {
+            } else if (!(encryptionType == null) && operation.toString().equals(encryptionType.toString())) {
                 encryption();
             } else {
                 throw new RuntimeException("Error! Incorrect operation.");

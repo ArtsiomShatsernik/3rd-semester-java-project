@@ -1,12 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
-      fx:controller="UI.FileBuildWindowController" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <HBox prefHeight="100.0" prefWidth="200.0" />
-      <HBox prefHeight="100.0" prefWidth="200.0" />
-   </children>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0"
+      prefWidth="530.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="UI.FileBuildWindowController">
+    <HBox prefHeight="98.0" prefWidth="386.0" spacing="35.0">
+        <Text smooth="false" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Нou can create a file using an existing .txt file or enter your own text separated by spaces (&quot; &quot;)"
+              textAlignment="JUSTIFY" wrappingWidth="88.83790278434753">
+            <HBox.margin>
+                <Insets bottom="5.0" left="10.0" top="5.0"/>
+            </HBox.margin>
+            <font>
+                <Font name="JetBrains Mono Light" size="12.0"/>
+            </font>
+        </Text>
+        <ChoiceBox fx:id="InputType" prefHeight="26.0" prefWidth="145.0">
+            <HBox.margin>
+                <Insets left="30.0" top="35.0"/>
+            </HBox.margin>
+        </ChoiceBox>
+        <VBox prefHeight="137.0" prefWidth="163.0">
+            <children>
+                <TextField fx:id="InputValue" prefHeight="86.0" prefWidth="136.0">
+                    <VBox.margin>
+                        <Insets right="10.0"/>
+                    </VBox.margin>
+                </TextField>
+                <Separator prefWidth="200.0"/>
+                <Text fx:id="EnterText" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text=""
+                      textAlignment="CENTER" wrappingWidth="186.00000286102295">
+                    <VBox.margin>
+                        <Insets bottom="10.0" right="10.0" top="10.0"/>
+                    </VBox.margin>
+                    <font>
+                        <Font name="JetBrains Mono Medium" size="12.0"/>
+                    </font>
+                </Text>
+            </children>
+        </VBox>
+    </HBox>
+    <VBox prefHeight="110.0" prefWidth="530.0">
+        <Separator prefWidth="200.0"/>
+        <HBox prefHeight="27.0" prefWidth="530.0" spacing="30.0">
+            <padding>
+                <Insets left="10.0" right="10.0"/>
+            </padding>
+            <ChoiceBox fx:id="FileType" prefWidth="150.0"/>
+            <ChoiceBox fx:id="FirstOperation" prefWidth="150.0"/>
+            <ChoiceBox fx:id="SecondOperation" prefWidth="150.0"/>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="44.0" prefWidth="530.0" spacing="40.0">
+            <Label contentDisplay="CENTER" prefHeight="35.0" prefWidth="141.0" text=" File type"
+                   textAlignment="CENTER">
+                <font>
+                    <Font name="JetBrains Mono Medium" size="20.0"/>
+                </font>
+            </Label>
+            <Label contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="35.0" prefWidth="121.0"
+                   text=" Operation" textAlignment="CENTER">
+                <font>
+                    <Font name="JetBrains Mono Medium" size="20.0"/>
+                </font>
+            </Label>
+            <Label contentDisplay="CENTER" layoutX="182.0" layoutY="10.0" prefHeight="35.0" prefWidth="152.0"
+                   text=" Operation" textAlignment="CENTER">
+                <font>
+                    <Font name="JetBrains Mono Medium" size="20.0"/>
+                </font>
+            </Label>
+        </HBox>
+        <Separator prefWidth="200.0"/>
+    </VBox>
+    <HBox prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+        <Text fx:id="ErrorWindow" fill="#09e757" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="No errors" textAlignment="CENTER" wrappingWidth="260.13671875">
+            <HBox.margin>
+                <Insets left="10.0" top="10.0"/>
+            </HBox.margin>
+            <font>
+                <Font name="JetBrains Mono Medium" size="24.0"/>
+            </font>
+        </Text>
+        <Button fx:id="BuildButton" mnemonicParsing="false" onAction="#onBuildButtonClicked" prefHeight="50.0"
+                prefWidth="182.0" text="Build">
+            <HBox.margin>
+                <Insets top="10.0"/>
+            </HBox.margin>
+        </Button>
+    </HBox>
 </VBox>
