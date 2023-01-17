@@ -15,28 +15,64 @@
                 <Font name="JetBrains Mono Light" size="12.0" />
             </font>
         </Text>
-        <ChoiceBox fx:id="InputType" prefHeight="26.0" prefWidth="145.0">
-            <HBox.margin>
-                <Insets left="30.0" top="5.0" />
-            </HBox.margin>
-        </ChoiceBox>
+      <VBox alignment="TOP_CENTER" prefHeight="148.0" prefWidth="144.0" spacing="10.0">
+         <HBox.margin>
+            <Insets left="30.0" top="5.0" />
+         </HBox.margin>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Options" textAlignment="CENTER" wrappingWidth="129.98827362060547">
+               <font>
+                  <Font name="JetBrains Mono Medium" size="12.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="-5.0" />
+               </VBox.margin>
+            </Text>
+              <ChoiceBox fx:id="InputType" prefHeight="26.0" prefWidth="145.0" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Input Type" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets bottom="-10.0" top="-10.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="JetBrains Mono Medium" size="12.0" />
+               </font>
+            </Text>
+            <TextField fx:id="FileName" promptText="No File" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="File Name" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets bottom="-10.0" top="-10.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="JetBrains Mono Medium" size="12.0" />
+               </font>
+            </Text>
+            <PasswordField fx:id="SecretKey" promptText="Default Key" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Key" textAlignment="CENTER" wrappingWidth="32.04298400878906">
+               <VBox.margin>
+                  <Insets top="-10.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="JetBrains Mono Medium" size="12.0" />
+               </font>
+            </Text>
+         </children>
+      </VBox>
         <VBox prefHeight="137.0" prefWidth="163.0">
-            <TextField fx:id="InputValue" prefHeight="86.0" prefWidth="136.0">
+            <TextField fx:id="InputValue" prefHeight="86.0" prefWidth="136.0" promptText="1 + 1, 2 + 2, 3 + 3">
                 <VBox.margin>
-                    <Insets right="10.0"/>
+                    <Insets right="10.0" top="5.0" />
                 </VBox.margin>
                 <font>
-                    <Font name="JetBrains Mono Medium" size="12.0"/>
+                    <Font name="JetBrains Mono Medium" size="12.0" />
                 </font>
             </TextField>
-            <Separator prefWidth="200.0"/>
-            <Text fx:id="EnterText" smooth="false" stroke="#150909" strokeType="OUTSIDE" strokeWidth="0.1" text="Data"
-                  textAlignment="CENTER" wrappingWidth="186.00000286102295">
+            <Separator prefWidth="200.0" />
+            <Text fx:id="EnterText" smooth="false" stroke="#150909" strokeType="OUTSIDE" strokeWidth="0.1" text="Input Data" textAlignment="CENTER" wrappingWidth="186.00000286102295">
                 <VBox.margin>
-                    <Insets bottom="10.0" right="10.0" top="10.0"/>
+                    <Insets bottom="10.0" right="10.0" top="10.0" />
                 </VBox.margin>
                 <font>
-                    <Font name="JetBrains Mono Medium" size="12.0"/>
+                    <Font name="JetBrains Mono Medium" size="12.0" />
                 </font>
             </Text>
         </VBox>
@@ -73,7 +109,7 @@
         </HBox>
         <Separator prefWidth="200.0" />
     </VBox>
-    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+    <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
         <Text fx:id="ErrorWindow" fill="#09e757" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="No errors" textAlignment="CENTER" wrappingWidth="260.13671875">
             <HBox.margin>
                 <Insets left="10.0" top="10.0" />
@@ -86,6 +122,9 @@
             <HBox.margin>
                 <Insets top="10.0" />
             </HBox.margin>
+         <font>
+            <Font name="JetBrains Mono Medium" size="12.0" />
+         </font>
         </Button>
     </HBox>
 </VBox>

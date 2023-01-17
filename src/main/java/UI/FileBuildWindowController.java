@@ -5,6 +5,7 @@ import enums.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -21,6 +22,10 @@ import java.util.Arrays;
 public class FileBuildWindowController {
     @FXML
     protected TextField InputValue;
+    @FXML
+    protected TextField FileName;
+    @FXML
+    protected PasswordField SecretKey;
     @FXML
     protected Text ErrorWindow;
     @FXML
@@ -87,10 +92,15 @@ public class FileBuildWindowController {
                 secondOperation = FileOperations.valueOf(secondOp);
             }
             FileFormer former = new FileFormer(fileName, fileType, firstOperation, secondOperation);
+            if (!SecretKey.getText().equals("")) {
+                former.changeEncryptionKey(SecretKey.getText());
+            }
             former.form();
-            File file = new File("data.txt");
-            if (file.exists()) {
-                Files.delete(Path.of("data.txt"));
+            if (!(fileType).equals(FileTypes.txt)) {
+                File file = new File("data.txt");
+                if (file.exists()) {
+                    Files.delete(Path.of("data.txt"));
+                }
             }
             fileName = former.fileName;
             ErrorWindow.setText("Formed file " + fileName);

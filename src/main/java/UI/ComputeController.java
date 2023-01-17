@@ -4,6 +4,7 @@ import FileActions.FileParser;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -24,6 +25,8 @@ public class ComputeController {
     Text ErrorWindow;
     @FXML
     Button ComputeButton;
+    @FXML
+    PasswordField SecretKey;
 
     @FXML
     protected void initialize() {
@@ -52,6 +55,9 @@ public class ComputeController {
             } else {
                 fileName = InputValue.getText();
                 FileParser parser = new FileParser(fileName);
+                if (!(SecretKey.getText().equals(""))) {
+                    parser.changeEncryptionKey(SecretKey.getText());
+                }
                 data = parser.parse();
             }
             MathExpressions mathExpressions = new MathExpressions(data);
