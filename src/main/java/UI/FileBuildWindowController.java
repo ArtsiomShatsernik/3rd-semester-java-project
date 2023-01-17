@@ -15,7 +15,6 @@ import tools.TxtLib;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -99,7 +98,9 @@ public class FileBuildWindowController {
                 former.changeEncryptionKey(SecretKey.getText());
             }
             former.form();
-            if (!(fileType.toString().equals("txt"))) {
+            if (!(fileType.toString().equals("txt"))
+                    || !FirstOperation.getSelectionModel().getSelectedItem().equals("None")
+                    || !SecondOperation.getSelectionModel().getSelectedItem().equals("None")) {
                 File file = new File(fileName);
                 if (file.exists()) {
                     Files.delete(file.toPath());
