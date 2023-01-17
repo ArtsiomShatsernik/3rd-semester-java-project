@@ -59,7 +59,7 @@ public class FileBuildWindowController {
 
     @FXML
     protected void onBuildButtonClicked() {
-        String fileName;
+        String fileName = "data";
         try {
             String checked = checkAll();
             if (checked.equals("true")) {
@@ -70,12 +70,15 @@ public class FileBuildWindowController {
                 ErrorWindow.setFill(Color.RED);
                 return;
             }
+            if (!(FileName.getText().equals(""))) {
+                fileName = FileName.getText();
+            }
             if (InputType.getSelectionModel().getSelectedItem().equals("Enter data")) {
                 String temp = InputValue.getText();
                 ArrayList<String> data = new ArrayList<>(Arrays.asList(temp.split(",")));
-                fileName = TxtLib.txtForm(data);
+                fileName = TxtLib.txtForm(data,fileName +".txt");
             } else {
-                fileName = InputValue.getText();
+                fileName = FileName.getText();
             }
             FileTypes fileType = FileTypes.valueOf(FileType.getSelectionModel().getSelectedItem());
             String firstOp = FirstOperation.getSelectionModel().getSelectedItem();
@@ -96,10 +99,10 @@ public class FileBuildWindowController {
                 former.changeEncryptionKey(SecretKey.getText());
             }
             former.form();
-            if (!(fileType).equals(FileTypes.txt)) {
-                File file = new File("data.txt");
+            if (!(fileType.toString().equals("txt"))) {
+                File file = new File(fileName + ".txt");
                 if (file.exists()) {
-                    Files.delete(Path.of("data.txt"));
+                    Files.delete(file.toPath());
                 }
             }
             fileName = former.fileName;
@@ -113,15 +116,20 @@ public class FileBuildWindowController {
     private String checkAll() {
         String inputText = InputValue.getText();
         String inputType = InputType.getSelectionModel().getSelectedItem();
-        if (inputText.equals("")) {
+        if (inputType.equals("Enter data") && inputText.equals("")) {
             return inputType + " first";
         }
         if (inputType.equals("Enter filePath")) {
-            File file = new File(inputText);
+            String fileName = FileName.getText();
+            String tmpName = fileName;
+            while ((tmpName = ToolsLib.deleteLastExtension(tmpName)) != "No extension") {
+                fileName = tmpName;
+            }
+            File file = new File(fileName);
             if (!file.exists()) {
                 return "Incorrect file path";
             }
-            if (ToolsLib.getLastExtension(InputValue.getText()).equals(FileType.getSelectionModel().getSelectedItem())
+            if (ToolsLib.getLastExtension(FileName.getText()).equals(FileType.getSelectionModel().getSelectedItem())
                     && FirstOperation.getSelectionModel().getSelectedItem().equals("None")
                     && SecondOperation.getSelectionModel().getSelectedItem().equals("None")) {
                 return ".txt file already exists";

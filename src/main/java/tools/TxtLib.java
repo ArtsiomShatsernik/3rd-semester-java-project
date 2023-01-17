@@ -4,17 +4,16 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class TxtLib {
-    public static String txtForm(ArrayList<String> data) {
+    public static String txtForm(ArrayList<String> data, String fileName) {
         BufferedWriter writer;
-        String path = "data.txt";
         try {
-            writer = new BufferedWriter(new FileWriter(path));
+            writer = new BufferedWriter(new FileWriter(fileName));
             for (String t: data) {
                 writer.write(t + "\n");
             }
             writer.flush();
             writer.close();
-            return path;
+            return fileName;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
