@@ -21,7 +21,7 @@ public class FileParser extends FileAction {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        this.fileInTmpDir = ToolsLib.formPathToTmpDir(tmpDir, fileName);
+        this.fileInTmpDir = ToolsLib.formPathToTmpDir(tmpDir, ToolsLib.deletePathToTmpDir(fileName));
         Path from = Paths.get(fileName);
         Path to = Paths.get(fileInTmpDir);
         try {
