@@ -32,6 +32,7 @@ public class JsonLib {
             }
             writer.write(expressions.toJSONString());
             writer.flush();
+            reader.close();
             return fileName;
         }
         public static ArrayList<String> jsonParse(String fileName) {

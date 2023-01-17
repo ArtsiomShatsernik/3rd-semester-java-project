@@ -57,6 +57,7 @@ public class XmlLib {
         } catch (TransformerException e) {
             throw new RuntimeException(e);
         }
+        reader.close();
         return fileName;
     }
     public static ArrayList<String> xmlParse(String fileName) {

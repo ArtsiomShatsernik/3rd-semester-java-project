@@ -1,12 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
-      fx:controller="UI.ComputeController" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <HBox prefHeight="100.0" prefWidth="200.0" />
-      <HBox prefHeight="100.0" prefWidth="200.0" />
-   </children>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0" prefWidth="530.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.ComputeController">
+   <HBox prefHeight="226.0" prefWidth="530.0" spacing="35.0">
+      <Text smooth="false" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="You can enter data using files built in File Former&#10;or input lines separated by ','" textAlignment="JUSTIFY" wrappingWidth="88.83790278434753">
+         <HBox.margin>
+            <Insets bottom="5.0" left="10.0" top="5.0" />
+         </HBox.margin>
+         <font>
+            <Font name="JetBrains Mono Light" size="12.0" />
+         </font>
+      </Text>
+      <VBox alignment="CENTER" prefHeight="205.0" prefWidth="410.0">
+         <HBox.margin>
+            <Insets bottom="5.0" top="5.0"/>
+         </HBox.margin>
+         <ChoiceBox fx:id="InputType" cache="true" prefHeight="26.0" prefWidth="145.0"/>
+         <TextArea fx:id="InputValue" prefHeight="171.0" prefWidth="343.0" promptText="Input">
+            <font>
+               <Font name="JetBrains Mono Medium" size="12.0"/>
+            </font>
+            <VBox.margin>
+               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+            </VBox.margin>
+         </TextArea>
+         <Separator prefWidth="200.0"/>
+         <TextArea fx:id="OutputValue" editable="false" layoutX="15.0" layoutY="40.0" prefHeight="171.0"
+                   prefWidth="343.0" promptText="Output">
+            <font>
+               <Font name="JetBrains Mono Medium" size="12.0"/>
+            </font>
+            <VBox.margin>
+               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+            </VBox.margin>
+         </TextArea>
+      </VBox>
+   </HBox>
+   <HBox prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+      <Text fx:id="ErrorWindow" fill="#09e757" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="No errors" textAlignment="CENTER" wrappingWidth="260.13671875">
+         <HBox.margin>
+            <Insets left="10.0" top="10.0" />
+         </HBox.margin>
+         <font>
+            <Font name="JetBrains Mono Medium" size="24.0" />
+         </font>
+      </Text>
+      <Button fx:id="ComputeButton" mnemonicParsing="false" onAction="#onComputeButtonClicked" prefHeight="50.0" prefWidth="182.0" text="Compute">
+         <HBox.margin>
+            <Insets top="10.0" />
+         </HBox.margin>
+      </Button>
+   </HBox>
 </VBox>

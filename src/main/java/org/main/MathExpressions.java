@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class MathExpressions {
-    private String fileName = "answers";
+    private String fileName = "input";
     private ArrayList<Expression> expressions;
     private  ArrayList<String> results;
 
@@ -31,15 +31,8 @@ public class MathExpressions {
         }
     }
 
-    public void compute() {
-        this.results = new ArrayList<>();
-        for (Expression next : expressions) {
-            try {
-                results.add(next.compute());
-            } catch (RuntimeException e) {
-                results.add(e.getMessage());
-            }
-        }
+    public void computeToFile() {
+        this.results = compute();
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(this.fileName + "Answers"));
             for (String next : results) {
@@ -49,5 +42,16 @@ public class MathExpressions {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    public ArrayList<String> compute() {
+        ArrayList<String> output = new ArrayList<>();
+        for (Expression next : expressions) {
+            try {
+                output.add(next.compute());
+            } catch (RuntimeException e) {
+                output.add(e.getMessage());
+            }
+        }
+        return output;
     }
 }

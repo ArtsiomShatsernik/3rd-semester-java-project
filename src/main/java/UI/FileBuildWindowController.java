@@ -67,7 +67,7 @@ public class FileBuildWindowController {
             }
             if (InputType.getSelectionModel().getSelectedItem().equals("Enter data")) {
                 String temp = InputValue.getText();
-                ArrayList<String> data = new ArrayList<>(Arrays.asList(temp.split(" ")));
+                ArrayList<String> data = new ArrayList<>(Arrays.asList(temp.split(",")));
                 fileName = TxtLib.txtForm(data);
             } else {
                 fileName = InputValue.getText();
