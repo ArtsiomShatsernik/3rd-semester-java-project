@@ -1,5 +1,5 @@
 # 3rd-semester-java-project
-## Выполненая работа:
+## Выполненная работа:
 1. [x] [Создание файлов разных типов с поддержкой вложенности](https://github.com/ArtsiomShatsernik/3rd-semester-java-project/blob/master/src/main/java/FileActions/FileFormer.java)
 
 <details>
@@ -48,7 +48,7 @@
   * Разархивировать файл
   * Расшифровать файл по заранее заданному ключу
   * Делать эти операции последоватлеьно, если задать верный порядок при создании
-  * Способен автоматически определять порядок и парсить файлы, созданные в FileFormer, основываясь на их названии (для этого и нужно добавление в название файлов расширений).
+  * Способен автоматически определять порядок и парсить файлы, созданные в FileFormer, основываясь на их названии (для этого и нужно добавление в название файлов расширений)
   
 И FileFormer и FileParser наследуются от одного класса [FileAction](https://github.com/ArtsiomShatsernik/3rd-semester-java-project/blob/master/src/main/java/FileActions/FileAction.java) с целью уменьшения кол-ва повторений в коде. 
 </details>
