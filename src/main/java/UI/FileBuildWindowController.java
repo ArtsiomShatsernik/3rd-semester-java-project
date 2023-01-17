@@ -98,9 +98,10 @@ public class FileBuildWindowController {
                 former.changeEncryptionKey(SecretKey.getText());
             }
             former.form();
-            if (!(fileType.toString().equals("txt"))
+            if (InputType.getSelectionModel().getSelectedItem().equals("Enter data") &&
+                    (!(fileType.toString().equals("txt"))
                     || !FirstOperation.getSelectionModel().getSelectedItem().equals("None")
-                    || !SecondOperation.getSelectionModel().getSelectedItem().equals("None")) {
+                    || !SecondOperation.getSelectionModel().getSelectedItem().equals("None"))) {
                 File file = new File(fileName);
                 if (file.exists()) {
                     Files.delete(file.toPath());
@@ -122,10 +123,6 @@ public class FileBuildWindowController {
         }
         if (inputType.equals("Input file")) {
             String fileName = FileName.getText();
-            String tmpName = fileName;
-            while ((tmpName = ToolsLib.deleteLastExtension(tmpName)) != "No extension") {
-                fileName = tmpName;
-            }
             File file = new File(fileName);
             if (!file.exists()) {
                 return "Incorrect file path";
