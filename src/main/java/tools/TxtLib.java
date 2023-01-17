@@ -1,6 +1,8 @@
 package tools;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class TxtLib {
@@ -13,7 +15,8 @@ public class TxtLib {
             }
             writer.flush();
             writer.close();
-            return fileName;
+
+            return String.valueOf(Paths.get(fileName));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

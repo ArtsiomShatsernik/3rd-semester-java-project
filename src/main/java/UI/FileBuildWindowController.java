@@ -100,7 +100,7 @@ public class FileBuildWindowController {
             }
             former.form();
             if (!(fileType.toString().equals("txt"))) {
-                File file = new File(fileName + ".txt");
+                File file = new File(fileName);
                 if (file.exists()) {
                     Files.delete(file.toPath());
                 }
