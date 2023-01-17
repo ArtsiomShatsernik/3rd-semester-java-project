@@ -40,7 +40,7 @@ public class FileBuildWindowController {
     @FXML
     protected void initialize() {
         InputType.getItems().add("Enter data");
-        InputType.getItems().add("Enter filePath");
+        InputType.getItems().add("Input file");
         InputType.getSelectionModel().selectFirst();
         for (FileTypes type: enums.FileTypes.values()) {
             FileType.getItems().add(type.toString());
@@ -120,7 +120,7 @@ public class FileBuildWindowController {
         if (inputType.equals("Enter data") && inputText.equals("")) {
             return inputType + " first";
         }
-        if (inputType.equals("Enter filePath")) {
+        if (inputType.equals("Input file")) {
             String fileName = FileName.getText();
             String tmpName = fileName;
             while ((tmpName = ToolsLib.deleteLastExtension(tmpName)) != "No extension") {

@@ -31,7 +31,7 @@ public class ComputeController {
     @FXML
     protected void initialize() {
         InputType.getItems().add("Enter data");
-        InputType.getItems().add("Enter filePath");
+        InputType.getItems().add("Input file");
         InputType.getSelectionModel().selectFirst();
     }
 
@@ -79,7 +79,7 @@ public class ComputeController {
         if (inputText.equals("")) {
             return inputType + " first";
         }
-        if (inputType.equals("Enter filePath")) {
+        if (inputType.equals("Input file")) {
             File file = new File(inputText);
             if (!file.exists()) {
                 return "Incorrect file path";
